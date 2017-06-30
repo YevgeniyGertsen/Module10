@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Module10
 {
+    public delegate void Show(string mes);
     public class Worker : IWorker
     {
-
+        public Show show;
         public string name { get; set; }
-        public string position { get; set; }
+        public Work.workers position { get; set; }
         public Worker(string name) : this(name, Work.workers.Ravshan) { }
         public Worker(string name, Work.workers position)
         {
             this.name = name;
-            this.position = position.ToString();
+            this.position = position;
         }
-        public void toDoWork(ref List<IPart> listOfWork)
+        public void toDoWork(ref List<IPart> listOfWork, Show show)
         {
             /*
              Посчитать количество отработанных часов
@@ -26,7 +27,7 @@ namespace Module10
             foreach(var item in listOfWork.Where(l=>!l.isDone))
             {
                 item.startDate = DateTime.Now;
-                Console.WriteLine(String.Format("Начал работу:  {0}\n в позиции {1}", name, position));
+                show(String.Format("Начал работу:  {0}\n в позиции {1}", name, position));
                 Basement basem = new Basement();
                 basem.startBuilding();
                 break;
